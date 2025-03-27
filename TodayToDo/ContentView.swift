@@ -6,19 +6,31 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    
+    @Environment(\.modelContext) private var modelContext
+    @Query private var items: [Item]
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                ForEach(items) { item in
+                    Text(item.title)
+                }
+            }//Navigation Stack
+            .navigationTitle(Text("Today To Do"))
+            .overlay {
+                if items.isEmpty {
+                    ContentUnavailableView("Empty", systemImage: "heart.circle", description: Text("Add some tasks to the list!"))
+                }
+            }
         }
-        .padding()
     }
 }
-
-#Preview {
-    ContentView()
-}
+    
+    #Preview {
+        ContentView()
+            .modelContainer(for: Item.self, inMemory: true)
+    }
