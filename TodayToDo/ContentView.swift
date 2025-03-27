@@ -18,6 +18,11 @@ struct ContentView: View {
             List {
                 ForEach(items) { item in
                     Text(item.title)
+                        .font(.title3.weight(.medium))
+                        .padding(.vertical, 6)
+                        .foregroundStyle(item.isCompleted == false ? Color.primary : Color.accentColor)
+                        .italic(item.isCompleted)
+                        .strikethrough(item.isCompleted)
                 }
             }//Navigation Stack
             .navigationTitle(Text("Today To Do"))
