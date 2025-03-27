@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     
+    
     var body: some View {
         NavigationStack {
             List {
@@ -25,7 +26,21 @@ struct ContentView: View {
                         .strikethrough(item.isCompleted)
                 }
             }//Navigation Stack
-            .navigationTitle(Text("Today To Do"))
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Text("Today To Do")
+                            .font(.largeTitle.bold())
+                        
+                        Spacer()
+                        
+                        SettingButtonView()
+                            .shadow(color: .primary.opacity(0.3), radius: 7, x: 0, y: 4)
+                    }
+                    .padding(.top, 70)
+                    .padding(.horizontal)
+                }
+            }
             .overlay {
                 if items.isEmpty {
                     ContentUnavailableView("Empty", systemImage: "heart.circle", description: Text("Add some tasks to the list!"))
