@@ -30,7 +30,23 @@ struct ContentView: View {
     }
 }
     
-    #Preview {
-        ContentView()
-            .modelContainer(for: Item.self, inMemory: true)
-    }
+#Preview("Sample Data") {
+    
+    let container = try! ModelContainer(for: Item.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    
+    
+    container.mainContext.insert(Item(title: "Develope iOS App", isCompleted: false))
+    container.mainContext.insert(Item(title: "Design iOS App", isCompleted: false))
+    container.mainContext.insert(Item(title: "Morning Workout", isCompleted: true))
+    container.mainContext.insert(Item(title: "Wakeup early", isCompleted: true))
+        
+    
+    return ContentView()
+        .modelContainer(container)
+        
+}
+
+#Preview("Empty") {
+    ContentView()
+        .modelContainer(for: Item.self, inMemory: true)
+}
