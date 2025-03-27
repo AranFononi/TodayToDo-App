@@ -33,6 +33,12 @@ struct ContentView: View {
                                 Label("Delete", systemImage: "trash")
                             }
                         }
+                        .swipeActions(edge: .leading) {
+                            Button("Done", systemImage: item.isCompleted == false ? "checkmark.circle" : "x.circle") {
+                                item.isCompleted.toggle()
+                            }
+                            .tint(item.isCompleted == false ? .green : .accentColor)
+                        }
                 }
             }//Navigation Stack
             .toolbar {
