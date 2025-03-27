@@ -24,6 +24,15 @@ struct ContentView: View {
                         .foregroundStyle(item.isCompleted == false ? Color.primary : Color.accentColor)
                         .italic(item.isCompleted)
                         .strikethrough(item.isCompleted)
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                withAnimation {
+                                    modelContext.delete(item)
+                                }
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                 }
             }//Navigation Stack
             .toolbar {
@@ -35,12 +44,12 @@ struct ContentView: View {
                         Spacer()
                         
                         SettingButtonView()
-                            .shadow(color: .primary.opacity(0.3), radius: 7, x: 0, y: 4)
+                            .shadow(color: .primary.opacity(0.3), radius: 10, x: 0, y: 4)
                     }
                     .padding(.top, 70)
                     .padding(.horizontal)
                 }
-            }
+            }// Toolbar
             .overlay {
                 if items.isEmpty {
                     ContentUnavailableView("Empty", systemImage: "heart.circle", description: Text("Add some tasks to the list!"))
