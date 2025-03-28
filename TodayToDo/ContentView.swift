@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     @State private var newItemTitle: String = ""
+    @FocusState private var isFocused: Bool
     
     
     var body: some View {
@@ -57,25 +58,40 @@ struct ContentView: View {
                     .padding(.horizontal)
                 }
             }// Toolbar
-            .safeAreaInset(edge: .bottom) {
-                VStack {
-                    TextField("",text: $newItemTitle)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    Button {
-                        let newItem = Item(title: newItemTitle, isCompleted: false)
-                        modelContext.insert(newItem)
-                    } label: {
-                        Text("Add")
-                    }
-                }
-                .padding()
-            }
             .overlay {
                 if items.isEmpty {
                     ContentUnavailableView("Empty", systemImage: "heart.circle", description: Text("Add some tasks to the list!"))
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                VStack {
+                    TextField("",text: $newItemTitle)
+                        .textFieldStyle(.plain)
+                        .padding(12)
+                        .background(.tertiary)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .font(.title2.weight(.light))
+                        .focused($isFocused)
+                    
+                    Button {
+                        if newItemTitle.isEmpty { return }
+                        let newItem = Item(title: newItemTitle, isCompleted: false)
+                        modelContext.insert(newItem)
+                        newItemTitle = ""
+                        isFocused = false
+                    } label: {
+                        Text("Add")
+                            .font(.title2.weight(.medium))
+                            .frame(maxWidth: .infinity)
+                        
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle)
+                    .controlSize(.extraLarge)
+                }
+                .padding()
+            }
+            
         }
     }
 }
