@@ -41,6 +41,9 @@ struct ContentView: View {
                                 Label("Delete", systemImage: "trash")
                             }
                         }
+                        .onTapGesture(perform: {
+                            item.isCompleted.toggle()
+                        })
                         .swipeActions(edge: .leading) {
                             Button("Done", systemImage: item.isCompleted == false ? "checkmark.circle" : "x.circle") {
                                 item.isCompleted.toggle()
