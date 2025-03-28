@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import TipKit
 
 struct ContentView: View {
     
@@ -14,6 +15,11 @@ struct ContentView: View {
     @Query private var items: [Item]
     @State private var newItemTitle: String = ""
     @FocusState private var isFocused: Bool
+    let buttonTip = ButtonTip()
+    
+    init() {
+        try? Tips.configure()
+    }
     
     
     var body: some View {
@@ -52,7 +58,8 @@ struct ContentView: View {
                         Spacer()
                         
                         SettingButtonView()
-                            .shadow(color: .primary.opacity(0.3), radius: 10, x: 0, y: 4)
+                            .shadow(color: .primary.opacity(0.1), radius: 10, x: 0, y: 6)
+                            .popoverTip(buttonTip)
                     }
                     .padding(.top, 70)
                     .padding(.horizontal)
