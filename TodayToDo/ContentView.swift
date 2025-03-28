@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
+    @State private var newItemTitle: String = ""
     
     
     var body: some View {
@@ -56,6 +57,20 @@ struct ContentView: View {
                     .padding(.horizontal)
                 }
             }// Toolbar
+            .safeAreaInset(edge: .bottom) {
+                VStack {
+                    TextField("",text: $newItemTitle)
+                        .textFieldStyle(.roundedBorder)
+                    
+                    Button {
+                        let newItem = Item(title: newItemTitle, isCompleted: false)
+                        modelContext.insert(newItem)
+                    } label: {
+                        Text("Add")
+                    }
+                }
+                .padding()
+            }
             .overlay {
                 if items.isEmpty {
                     ContentUnavailableView("Empty", systemImage: "heart.circle", description: Text("Add some tasks to the list!"))
