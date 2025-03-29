@@ -51,10 +51,11 @@ struct SettingsView: View {
                         .multilineTextAlignment(.center)
                         .foregroundStyle(alternateColors.background)
                         .font(.footnote)
-                        .padding(.bottom, 12)
+                        .padding(.bottom, -8)
                     
                 } // Section
                 .listRowBackground(Color.clear)
+                
                 Section(header: Text("Light/Dark Mode").font(.title2.weight(.medium)).foregroundStyle(alternateColors.background)) {
                     Picker("Color Scheme", selection: $colorSchemeManager.selectedColorScheme) {
                         Text("Light").tag("light")
@@ -64,6 +65,32 @@ struct SettingsView: View {
                     
                 }
                 .listRowBackground(Color.clear)
+                
+                Section(header: Text("Contact Info").font(.title2.weight(.medium)).foregroundStyle(alternateColors.background)) {
+                    
+                    CustomListRowView(rowLabel: "Developer", rowIcon: "cup.and.heat.waves.fill", rowContent: "Aran Fononi")
+                    CustomListRowView(rowLabel: "Github Profile", rowIcon: "network", rowLinkLabel: "Github", rowLinkDestination: "https://github.com/AranFononi")
+                    CustomListRowView(rowLabel: "LinkedIn Profile", rowIcon: "point.3.filled.connected.trianglepath.dotted", rowLinkLabel: "LinkedIn", rowLinkDestination: "www.linkedin.com/in/aran-fononi-18182b265")
+                    CustomListRowView(rowLabel: "Email", rowIcon: "envelope.fill", rowContent: "AranFononi@Gmail.com")
+                    
+                    
+                }
+                .listRowBackground(Color.clear)
+                
+                Section {
+                    
+                    HStack {
+                        Spacer()
+                        Text("Made with ❤️ and some ☕️\nMinimal & Fast Todo App")
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(alternateColors.background)
+                        Spacer()
+                    }
+                        
+                    
+                }
+                .listRowBackground(Color.clear)
+                
             } // List
             .scrollContentBackground(.hidden)
             .padding(.top, 24)
@@ -77,4 +104,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .environmentObject(ColorSchemeManager.shared)
+        .environmentObject(ColorManager.shared)
 }
