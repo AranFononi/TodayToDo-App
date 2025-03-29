@@ -8,25 +8,20 @@
 import SwiftUI
 
 struct SettingButtonView: View {
-    
-    @State var alternateColors = AlternateColors.colors[ContentView.selectedColor]!
+    @EnvironmentObject private var colorManager: ColorManager
 
     var body: some View {
+        @State var alternateColors = AlternateColors.colors[colorManager.selectedColor]!
+        
         ZStack {
             Circle()
                 .fill(alternateColors.backgroundInvert)
                 .clipShape(.circle)
-            
-            Button {
-                //open settings
-                print("Open Settings")
-            } label: {
-                Image(systemName: "gear")
-                    .font(.title3.weight(.bold))
-                    .foregroundColor(AlternateColors.colors[ContentView.selectedColor]!.background)
+                
 
-                    
-            }
+            Image(systemName: "gear")
+                .font(.title3.weight(.bold))
+                .foregroundColor(alternateColors.background)
                 
         }
     }

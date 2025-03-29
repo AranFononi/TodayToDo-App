@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State var alternateColors = AlternateColors.colors[ContentView.selectedColor]!
+    @EnvironmentObject private var colorManager: ColorManager
     private let alternateColor: [String] = ["green", "blue", "gray", "brown"]
+    @EnvironmentObject private var colorSchemeManager: ColorSchemeManager
     
     var body: some View {
+        @State var alternateColors = AlternateColors.colors[colorManager.selectedColor]!
+        
         ZStack {
             alternateColors.backgroundInvert
                 .ignoresSafeArea()
@@ -23,6 +26,7 @@ struct SettingsView: View {
                         HStack(spacing : 12) {
                             ForEach(alternateColor.indices, id: \.self) { color in
                                 Button {
+                                    ColorManager.shared.selectedColor = self.alternateColor[color]
                                     print("Selected Color: \(self.alternateColor[color])")
                                 } label: {
                                     VStack(alignment: .center) {
@@ -35,8 +39,8 @@ struct SettingsView: View {
                                             .fontWeight(.medium)
                                             .foregroundStyle(alternateColors.background)
                                     }
-                                        
-                                        
+                                    
+                                    
                                 }
                             }
                         }
@@ -51,8 +55,19 @@ struct SettingsView: View {
                     
                 } // Section
                 .listRowBackground(Color.clear)
+                Section(header: Text("Light/Dark Mode").font(.title2.weight(.medium)).foregroundStyle(alternateColors.background)) {
+                    Picker("Color Scheme", selection: $colorSchemeManager.selectedColorScheme) {
+                        Text("Light").tag("light")
+                        Text("Dark").tag("dark")
+                    }
+                    .pickerStyle(.segmented)
+                    
+                }
+                .listRowBackground(Color.clear)
             } // List
             .scrollContentBackground(.hidden)
+            .padding(.top, 24)
+
             
         } // ZStack
         
@@ -61,4 +76,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(ColorSchemeManager.shared)
 }
