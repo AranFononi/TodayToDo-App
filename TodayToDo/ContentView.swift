@@ -15,6 +15,9 @@ struct ContentView: View {
     @Query private var items: [Item]
     @State private var newItemTitle: String = ""
     @FocusState private var isFocused: Bool
+    @State var alternateColors = AlternateColors.colors[ContentView.selectedColor]!
+    @State static var selectedColor: String = "brown"
+    
     let buttonTip = ButtonTip()
     
     init() {
@@ -24,12 +27,16 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
+            ZStack {
+                alternateColors.background
+                    .ignoresSafeArea()
+                
             List {
                 ForEach(items) { item in
                     Text(item.title)
                         .font(.title3.weight(.medium))
                         .padding(.vertical, 6)
-                        .foregroundStyle(item.isCompleted == false ? Color.primary : Color.accentColor)
+                        .foregroundStyle(item.isCompleted == false ? alternateColors.backgroundInvert : alternateColors.listInvert)
                         .italic(item.isCompleted)
                         .strikethrough(item.isCompleted)
                         .swipeActions {
@@ -49,19 +56,31 @@ struct ContentView: View {
                                 item.isCompleted.toggle()
                             }
                             .tint(item.isCompleted == false ? .green : .accentColor)
+                            
                         }
+                        .listRowBackground(alternateColors.list)
+                    
                 }
+                
+                
             }//Navigation Stack
+            .scrollContentBackground(.hidden)
+            .shadow(color: .white.opacity(0.08), radius: 20, x: 0, y: 6)
+                
+            
+            
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         Text("Today To Do")
                             .font(.largeTitle.bold())
+                            .foregroundStyle(alternateColors.backgroundInvert)
+                            .shadow(color: .white.opacity(0.08), radius: 20, x: 0, y: 6)
                         
                         Spacer()
                         
                         SettingButtonView()
-                            .shadow(color: .primary.opacity(0.1), radius: 10, x: 0, y: 6)
+                            .shadow(color: .white.opacity(0.08), radius: 20, x: 0, y: 6)
                             .popoverTip(buttonTip)
                     }
                     .padding(.top, 70)
@@ -78,10 +97,13 @@ struct ContentView: View {
                     TextField("",text: $newItemTitle)
                         .textFieldStyle(.plain)
                         .padding(12)
-                        .background(.tertiary)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .background(RoundedRectangle(cornerRadius: 12)
+                            .stroke(.white.opacity(0.3), lineWidth: 3)
+                            .background(alternateColors.list)
+                            .clipShape(RoundedRectangle(cornerRadius: 12)))
                         .font(.title2.weight(.light))
                         .focused($isFocused)
+                        .shadow(color: .white.opacity(0.08), radius: 20, x: 0, y: 6)
                     
                     Button {
                         if newItemTitle.isEmpty { return }
@@ -92,19 +114,31 @@ struct ContentView: View {
                     } label: {
                         Text("Add")
                             .font(.title2.weight(.medium))
-                            .frame(maxWidth: .infinity)
+                            .frame(maxWidth: 150)
+                            .foregroundStyle(alternateColors.list)
                         
                     }
                     .buttonStyle(.borderedProminent)
                     .buttonBorderShape(.roundedRectangle)
                     .controlSize(.extraLarge)
+                    .tint(alternateColors.listInvert)
+                    .padding(.top, 9)
+                    .shadow(color: .white.opacity(0.08), radius: 20, x: 0, y: 6)
                 }
                 .padding()
             }
             
+            
         }
+        } // Navigation Stack
+        
+        
     }
+    
+    
 }
+
+
     
 #Preview("Sample Data") {
     

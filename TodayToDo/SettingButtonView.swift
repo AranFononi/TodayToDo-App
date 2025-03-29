@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct SettingButtonView: View {
+    
+    @State var alternateColors = AlternateColors.colors[ContentView.selectedColor]!
+
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(.primary)
-                .frame(width: 40, height: 40)
+            Circle()
+                .fill(alternateColors.backgroundInvert)
                 .clipShape(.circle)
             
             Button {
@@ -21,8 +23,8 @@ struct SettingButtonView: View {
             } label: {
                 Image(systemName: "gear")
                     .font(.title3.weight(.bold))
-                    .foregroundColor(.primary)
-                    .colorInvert()
+                    .foregroundColor(AlternateColors.colors[ContentView.selectedColor]!.background)
+
                     
             }
                 
