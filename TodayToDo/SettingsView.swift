@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var colorManager: ColorManager
-    private let alternateColor: [String] = ["green", "blue", "gray", "brown"]
+    private let alternateColor: [String] = ["green", "blue", "gray", "brown","pink"]
     @EnvironmentObject private var colorSchemeManager: ColorSchemeManager
     
     var body: some View {
