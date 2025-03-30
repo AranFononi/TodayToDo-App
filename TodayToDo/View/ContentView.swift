@@ -111,6 +111,7 @@ struct ContentView: View {
                     .overlay {
                         if items.isEmpty {
                             ContentUnavailableView("Empty", systemImage: "heart.circle", description: Text("Add some tasks to the list!"))
+                                .foregroundStyle(alternateColors.backgroundInvert)
                         }
                     }
                     
