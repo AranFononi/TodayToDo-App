@@ -46,7 +46,7 @@ struct SettingsView: View {
                         }
                     } // Scroll View
                     .padding(.top, 12)
-                    Text("Choose your favorite app icon from the collection above.")
+                    Text("Choose your favorite app color from the palette above.")
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(alternateColors.background)
