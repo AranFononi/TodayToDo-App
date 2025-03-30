@@ -12,8 +12,14 @@ struct SettingsView: View {
     private let alternateColor: [String] = ["green", "blue", "gray", "brown","pink"]
     @EnvironmentObject private var colorSchemeManager: ColorSchemeManager
     
+    private var alternateColors: ColorVariant {
+            AlternateColors.colors[colorManager.selectedColor] ?? ColorVariant(
+                background: .gray, list: .gray, backgroundInvert: .white, listInvert: .black
+            )
+        }
+    
     var body: some View {
-        @State var alternateColors = AlternateColors.colors[colorManager.selectedColor]!
+        
         
         ZStack {
             alternateColors.backgroundInvert

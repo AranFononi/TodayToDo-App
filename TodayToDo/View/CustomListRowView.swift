@@ -17,9 +17,13 @@ struct CustomListRowView: View {
     @State var rowLinkDestination: String? = nil
     @EnvironmentObject private var colorManager: ColorManager
     
+    private var alternateColors: ColorVariant {
+            AlternateColors.colors[colorManager.selectedColor] ?? ColorVariant(
+                background: .gray, list: .gray, backgroundInvert: .white, listInvert: .black
+            )
+        }
     
     var body: some View {
-        @State var alternateColors = AlternateColors.colors[colorManager.selectedColor]!
         
         LabeledContent {
             if let rowContent = rowContent {

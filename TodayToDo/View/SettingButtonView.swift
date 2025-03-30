@@ -10,8 +10,13 @@ import SwiftUI
 struct SettingButtonView: View {
     @EnvironmentObject private var colorManager: ColorManager
 
+    private var alternateColors: ColorVariant {
+            AlternateColors.colors[colorManager.selectedColor] ?? ColorVariant(
+                background: .gray, list: .gray, backgroundInvert: .white, listInvert: .black
+            )
+        }
+    
     var body: some View {
-        @State var alternateColors = AlternateColors.colors[colorManager.selectedColor]!
         
         ZStack {
             Circle()

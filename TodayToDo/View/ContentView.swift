@@ -18,7 +18,12 @@ struct ContentView: View {
     @EnvironmentObject private var colorManager: ColorManager
     @State private var isShowingSheet: Bool = false
     @StateObject private var colorSchemeManager = ColorSchemeManager.shared
-    //@StateObject private var colorManager = ColorManager.shared
+    
+    private var alternateColors: ColorVariant {
+            AlternateColors.colors[colorManager.selectedColor] ?? ColorVariant(
+                background: .gray, list: .gray, backgroundInvert: .white, listInvert: .black
+            )
+        }
     
     let buttonTip = ButtonTip()
     
@@ -27,7 +32,6 @@ struct ContentView: View {
     }
     
     var body: some View {
-        @State var alternateColors = AlternateColors.colors[colorManager.selectedColor]!
         
         
         ZStack {
